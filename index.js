@@ -10,7 +10,8 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/predict_budget' && req.method === 'GET') {
         const event = {
             queryStringParameters: {
-                customer_id: query.customer_id
+                customer_id: query.customer_id,
+                date: query.date
             }
         };
 
