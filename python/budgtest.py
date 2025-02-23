@@ -10,7 +10,7 @@ key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZu
 supabase: Client = create_client(url, key)
 
 # Load the saved model
-model_file = "./../models/budget_model_new.pkl"
+model_file = "./models/budget_model_new.pkl"
 model, features_used = joblib.load(model_file)
 
 def fetch_data(customer_id: int):
