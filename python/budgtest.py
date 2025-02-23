@@ -13,9 +13,9 @@ supabase: Client = create_client(url, key)
 model_file = "./models/budget_model_new.pkl"
 model, features_used = joblib.load(model_file)
 
-def fetch_data(customer_id: int):
+def fetch_data(customer_id: int, date: str):
     # Calculate the date range for the past 7 days
-    end_date = datetime.now().date()
+    end_date = datetime.strptime(date, '%Y-%m-%d').date()
     start_date = end_date - timedelta(days=6)
     
     # Fetch data from Supabase
@@ -39,8 +39,8 @@ def fetch_data(customer_id: int):
     
     return data_dict
 
-def predict_budget(customer_id: int):
-    data_dict = fetch_data(customer_id)
+def predict_budget(customer_id: int, date: str):
+    data_dict = fetch_data(customer_id, date)
     input_df = pd.DataFrame(data_dict)
     
     # Ensure that input_df has the same feature columns used in training (features_used).
@@ -53,7 +53,8 @@ def predict_budget(customer_id: int):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Predict weekly budget for a customer.")
     parser.add_argument("customer_id", type=int, help="Customer ID")
+    parser.add_argument("date", type=str, help="Date in YYYY-MM-DD format")
     args = parser.parse_args()
     
-    predicted_budget = predict_budget(args.customer_id)
+    predicted_budget = predict_budget(args.customer_id, args.date)
     print(predicted_budget)
