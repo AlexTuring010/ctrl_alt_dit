@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
         };
     }
 
-    const scriptPath = path.resolve(__dirname, '../../python/budgtest.py');
+    const scriptPath = path.resolve(__dirname, '../python/budgtest.py');
 
     return new Promise((resolve, reject) => {
         exec(`python ${scriptPath} ${customerId}`, (error, stdout, stderr) => {
